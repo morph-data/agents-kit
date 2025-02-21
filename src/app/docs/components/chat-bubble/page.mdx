@@ -1,0 +1,173 @@
+import { ChatBubble } from '@/registry/chat-bubble';
+import { MdRenderer } from '@/registry/md-renderer';
+
+export const messages = [
+  {
+    id: "system1",
+    createdAt: "2025-02-19T08:59:00.000Z",
+    role: "system",
+    content: `You are a helpful and knowledgeable assistant. 
+Please provide detailed, informative, and engaging responses using markdown formatting when appropriate.`,
+  },
+  {
+    id: "user",
+    createdAt: "2025-02-19T09:00:15.000Z",
+    role: "user",
+    content: "I was wondering if you could share an interesting fact about space.",
+  },
+  {
+    id: "assistant",
+    createdAt: "2025-02-19T09:00:25.000Z",
+    role: "assistant",
+    content:
+      `Absolutely! Here's an intriguing fact about space:
+
+**Venus' Unique Day**  
+- On Venus, a single day (one complete rotation on its axis) takes **243 Earth days**.  
+- Interestingly, Venus takes only about **225 Earth days** to complete one orbit around the Sun.  
+
+This means that **a day on Venus is longer than its year!**
+
+Isn't it fascinating how our neighboring planets have such unique characteristics?`,
+    revisionId: "rev2",
+  },
+];
+
+
+# Chat Bubble
+This is a chat bubble component.
+
+<Tabs defaultValue="preview" className="w-full not-prose">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <Card className="w-full p-8 items-center">
+      <div className='max-w-prose mx-auto'>
+        <ChatBubble variant='supplementary' className='mb-4'>
+          <MdRenderer value={messages[0].content} />
+        </ChatBubble>
+        <ChatBubble className="ml-auto mb-4">
+          <MdRenderer value={messages[1].content} />
+        </ChatBubble>
+        <ChatBubble variant="ghost">
+          <MdRenderer value={messages[2].content} />
+        </ChatBubble>
+      </div>
+    </Card>
+  </TabsContent>
+  <TabsContent value="code">
+    ```tsx page.tsx
+    import * as React from "react"
+    import { ChatBubble } from '@/components/agents-kit/chat-bubble';
+    import { MdRenderer } from '@/components/agents-kit/md-renderer';
+
+    export const messages = [
+      {
+        id: "system1",
+        createdAt: "2025-02-19T08:59:00.000Z",
+        role: "system",
+        content: `You are a helpful and knowledgeable assistant. 
+    Please provide detailed, informative, and engaging responses using markdown formatting when appropriate.`,
+      },
+      {
+        id: "user",
+        createdAt: "2025-02-19T09:00:15.000Z",
+        role: "user",
+        content: "I was wondering if you could share an interesting fact about space.",
+      },
+      {
+        id: "assistant",
+        createdAt: "2025-02-19T09:00:25.000Z",
+        role: "assistant",
+        content:
+          `Absolutely! Here's an intriguing fact about space:
+
+    **Venus' Unique Day**  
+    - On Venus, a single day (one complete rotation on its axis) takes **243 Earth days**.  
+    - Interestingly, Venus takes only about **225 Earth days** to complete one orbit around the Sun.  
+
+    This means that **a day on Venus is longer than its year!**
+
+    Isn't it fascinating how our neighboring planets have such unique characteristics?`,
+        revisionId: "rev2",
+      },
+    ];
+
+    export function ChatBubbleDemo() {
+      return (
+        <div className='max-w-prose mx-auto'>
+        <ChatBubble variant='supplementary' className='mb-4'>
+          <MdRenderer value={messages[0].content} />
+        </ChatBubble>
+        <ChatBubble className="ml-auto mb-4">
+          <MdRenderer value={messages[1].content} />
+        </ChatBubble>
+        <ChatBubble variant="ghost">
+          <MdRenderer value={messages[2].content} />
+        </ChatBubble>
+      </div>
+      )
+    }
+    ```
+  </TabsContent>
+</Tabs>
+
+
+## Installation
+
+<Steps>
+  <Step title='Install dependencies'>
+    ```bash
+    npm install class-variance-authority
+    ```
+  </Step>
+  <Step title="Add component">
+    Copy and paste the code into your project’s component directory.
+
+    The recommended file name is `agents-kit/chat-bubble.tsx`.
+
+    <CodeBlockWrapper>
+    ```tsx
+    import React, { FC, HTMLAttributes, PropsWithChildren } from "react";
+    import { cva, type VariantProps } from "class-variance-authority";
+    import { cn } from "@/lib/utils";
+
+    const chatBubbleVariatnts = cva("p-4", {
+      variants: {
+        variant: {
+          bubble: "max-w-[75%] w-fit bg-muted rounded-lg",
+          ghost: "border-none",
+          supplementary:
+            "text-muted-foreground text-sm py-2 border-l-4 border-border",
+        },
+      },
+      defaultVariants: {
+        variant: "bubble",
+      },
+    });
+
+    type ChatBubbleProps = {} & VariantProps<typeof chatBubbleVariatnts> &
+      HTMLAttributes<HTMLDivElement>;
+
+    const ChatBubble: FC<PropsWithChildren<ChatBubbleProps>> = ({
+      variant,
+      className,
+      ...props
+    }) => {
+      return (
+        <div>
+          <div className={cn(chatBubbleVariatnts({ variant }), className)}>
+            {props.children}
+          </div>
+        </div>
+      );
+    };
+
+    export { ChatBubble };
+
+    ```
+    </CodeBlockWrapper>
+  </Step>
+</Steps>

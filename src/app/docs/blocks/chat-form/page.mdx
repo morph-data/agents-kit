@@ -1,0 +1,139 @@
+import { ChatForm } from '@/registry/chat-form';
+
+
+<Label>Block</Label>
+
+# Chat Form
+
+<Tabs defaultValue="preview" className="w-full not-prose">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <Card className="w-full p-8 items-center">
+      <ChatForm />
+    </Card>
+  </TabsContent>
+  <TabsContent value="code">
+    ```tsx page.tsx
+    import * as React from "react"
+    import { useChat } from '@ai-sdk/react'
+    import { ChatForm } from '@/components/agents-kit/chat-form';
+
+    export function ChatFormDemo() {
+      const { input, handleInputChange, handleSubmit } = useChat({});
+
+      return (
+        <ChatForm 
+          inputValue={input} 
+          onInputChange={handleInputChange} 
+          onSubmit={handleSubmit} 
+        />
+      )
+    }
+    ```
+  </TabsContent>
+</Tabs>
+
+
+## Installation
+
+<Steps>
+  <Step title='Install dependencies'>
+    1. Add shadcn/ui components.
+    ```bash
+    npx shadcn@latest add button card dropdown-menu
+    ```
+
+    2. Install dependencies.
+    ```bash
+    npm install lucide-react
+    ```
+
+    3. Add agents-kit components.
+    - [AutosizeTextarea](/docs/components/autosize-textarea)
+    - [ChatActions, ChatActionIconButton](/docs/components/chat-actions)
+  </Step>
+  <Step title="Add component">
+    Copy and paste the code into your project’s component directory.
+
+    The recommended file name is `agents-kit/chat-form.tsx`.
+    
+    <CodeBlockWrapper>
+    ```tsx
+    "use client";
+
+    import React, { FC, PropsWithChildren, useRef } from "react";
+    import { LucideArrowUp, LucidePlus } from "lucide-react";
+    import { Button } from "@/components/ui/button";
+    import { Card } from "@/components/ui/card";
+    import {
+      DropdownMenu,
+      DropdownMenuContent,
+      DropdownMenuItem,
+      DropdownMenuTrigger,
+    } from "@/components/ui/dropdown-menu";
+    import { AutosizeTextarea } from "@/components/agents-kit/autosize-textarea";
+    import { ChatActionIconButton, ChatActions } from "@/components/agents-kit/chat-actions";
+
+    export interface ChatFormProps {
+      inputValue?: string;
+      onInputChange?: (
+        e:
+          | React.ChangeEvent<HTMLInputElement>
+          | React.ChangeEvent<HTMLTextAreaElement>
+      ) => void;
+      onFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+      onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+      actions?: React.ReactNode;
+    }
+
+    const ChatForm: FC<PropsWithChildren<ChatFormProps>> = (props) => {
+      const fileInputRef = useRef<HTMLInputElement>(null);
+
+      return (
+        <Card className="p-2 rounded-3xl shadow">
+          <form onSubmit={props.onSubmit} className="grid grid-cols-1 gap-2">
+            {props.children}
+            <AutosizeTextarea
+              value={props.inputValue}
+              placeholder="Type a message..."
+              className="resize-none"
+              variant={"ghost"}
+              onChange={props.onInputChange}
+              maxHeight={260}
+            />
+            <ChatActions>
+              {props.onFileChange && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <ChatActionIconButton>
+                      <LucidePlus />
+                    </ChatActionIconButton>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onClick={() => fileInputRef.current?.click()}>
+                      Upload from computer
+                    </DropdownMenuItem>
+                    <input ref={fileInputRef} type="file" className="hidden" />
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+              {props.actions}
+              <div className="flex-1" />
+              <Button type="submit" size="icon" className="rounded-full">
+                <LucideArrowUp />
+              </Button>
+            </ChatActions>
+          </form>
+        </Card>
+      );
+    };
+
+    export { ChatForm };
+
+    ```
+    </CodeBlockWrapper>
+  </Step>
+</Steps>

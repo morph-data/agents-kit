@@ -1,0 +1,197 @@
+import { ChatMessages } from '@/registry/chat-messages';
+
+export const messages = [
+  {
+    id: "system1",
+    createdAt: "2025-02-19T08:59:00.000Z",
+    role: "system",
+    content: `You are a helpful and knowledgeable assistant. 
+Please provide detailed, informative, and engaging responses using markdown formatting when appropriate.`,
+  },
+  {
+    id: "user",
+    createdAt: "2025-02-19T09:00:15.000Z",
+    role: "user",
+    content: "I was wondering if you could share an interesting fact about space.",
+  },
+  {
+    id: "assistant",
+    createdAt: "2025-02-19T09:00:25.000Z",
+    role: "assistant",
+    content:
+      `Absolutely! Here's an intriguing fact about space:
+
+**Venus' Unique Day**  
+- On Venus, a single day (one complete rotation on its axis) takes **243 Earth days**.  
+- Interestingly, Venus takes only about **225 Earth days** to complete one orbit around the Sun.  
+
+This means that **a day on Venus is longer than its year!**
+
+Isn't it fascinating how our neighboring planets have such unique characteristics?`,
+    revisionId: "rev2",
+  },
+];
+
+
+<Label>Block</Label>
+
+# Chat Messages
+
+<Tabs defaultValue="preview" className="w-full not-prose">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <Card className="w-full p-8 items-center">
+      <div className='w-[680px] mx-auto'>
+        <ChatMessages messages={messages} />
+      </div>
+    </Card>
+  </TabsContent>
+  <TabsContent value="code">
+    ```tsx page.tsx
+    import * as React from "react"
+    import { ChatMessages } from '@/components/agents-kit/chat-messages';
+
+    const messages = [
+      {
+        id: "system1",
+        createdAt: "2025-02-19T08:59:00.000Z",
+        role: "system",
+        content: `You are a helpful and knowledgeable assistant. 
+    Please provide detailed, informative, and engaging responses using markdown formatting when appropriate.`,
+      },
+      {
+        id: "user",
+        createdAt: "2025-02-19T09:00:15.000Z",
+        role: "user",
+        content: "I was wondering if you could share an interesting fact about space.",
+      },
+      {
+        id: "assistant",
+        createdAt: "2025-02-19T09:00:25.000Z",
+        role: "assistant",
+        content:
+          `Absolutely! Here's an intriguing fact about space:
+
+    **Venus' Unique Day**  
+    - On Venus, a single day (one complete rotation on its axis) takes **243 Earth days**.  
+    - Interestingly, Venus takes only about **225 Earth days** to complete one orbit around the Sun.  
+
+    This means that **a day on Venus is longer than its year!**
+
+    Isn't it fascinating how our neighboring planets have such unique characteristics?`,
+        revisionId: "rev2",
+      },
+    ];
+
+    export function ChatMessagesDemo() {
+
+      return (
+        <ChatMessages messages={messages} />
+      )
+    }
+    ```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Steps>
+  <Step title='Install dependencies'>
+    1. Add agents-kit components.
+    - [ChatBubble](/docs/components/chat-bubble)
+    - [MdRenderer](/docs/components/md-renderer)
+  </Step>
+  <Step title="Add component">
+    Copy and paste the code into your project’s component directory.
+
+    The recommended file name is `agents-kit/chat-messages.tsx`.
+
+    <CodeBlockWrapper>
+    ```tsx
+    "use client";
+
+    import React, { FC } from "react";
+    import { ChatBubble } from "@/components/agents-kit/chat-bubble";
+    import { MdRenderer } from "@/components/agents-kit/md-renderer";
+
+    // Copied from Verce AI SDK Message interface
+    interface Message {
+      /**
+      A unique identifier for the message.
+      */
+      id: string;
+      /**
+      The timestamp of the message.
+      */
+      createdAt?: Date;
+      /**
+      Text content of the message.
+      */
+      content: string;
+      /**
+      * Additional attachments to be sent along with the message.
+      */
+      // experimental_attachments?: Attachment[];
+      role: "system" | "user" | "assistant" | "data";
+      // data?: JSONValue;
+      /**
+      * Additional message-specific information added on the server via StreamData
+      */
+      // annotations?: JSONValue[] | undefined;
+      /**
+      Tool invocations (that can be tool calls or tool results, depending on whether or not the invocation has finished)
+      that the assistant made as part of this message.
+      */
+      // toolInvocations?: Array<ToolInvocation>;
+    }
+
+    export interface ChatMessagesProps {
+      messages: Message[];
+    }
+
+    const ChatMessages: FC<ChatMessagesProps> = ({ messages }) => {
+      const getVariantFromRole = (role: Message["role"]) => {
+        switch (role) {
+          case "system":
+            return "supplementary";
+          case "user":
+            return "bubble";
+          case "assistant":
+            return "ghost";
+          case "data":
+            return "supplementary";
+        }
+      };
+
+      const getClassFromRole = (role: Message["role"]) => {
+        switch (role) {
+          case "user":
+            return "text-right ml-auto";
+          default:
+            return "";
+        }
+      };
+      return (
+        <div className="w-full grid grid-cols-1 gap-4">
+          {messages.map((message) => (
+            <ChatBubble
+              key={message.id}
+              variant={getVariantFromRole(message.role)}
+              className={getClassFromRole(message.role)}
+            >
+              <MdRenderer value={message.content} />
+            </ChatBubble>
+          ))}
+        </div>
+      );
+    };
+
+    export { ChatMessages };
+
+    ```
+    </CodeBlockWrapper>
+  </Step>
+</Steps>

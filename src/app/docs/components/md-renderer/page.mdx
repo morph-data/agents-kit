@@ -1,0 +1,208 @@
+import { MdRenderer } from '@/registry/md-renderer';
+
+export const markdownString = `Large Language Models (LLMs) are advanced artificial intelligence systems designed to understand and generate human-like text. They are built using deep learning techniques and trained on vast amounts of data, enabling them to perform a variety of language-related tasks.
+
+- **Natural Language Understanding:** LLMs can interpret and generate coherent text based on the input they receive.
+- **Versatility:** They are used in numerous applications, ranging from simple text generation to complex problem-solving.
+- **Scalability:** LLMs can be scaled to handle larger datasets and more complex tasks over time.
+
+Below is a table summarizing some of the promising uses of LLMs:
+
+| **Application**            | **Description**                                                         |
+|----------------------------|-------------------------------------------------------------------------|
+| **Customer Support**       | Automating responses to common queries and providing 24/7 assistance.   |
+| **Content Generation**     | Creating articles, summaries, and creative writing with minimal input.  |
+| **Translation**            | Facilitating real-time and accurate translation between multiple languages. |
+| **Education**              | Offering personalized tutoring and generating educational content.      |
+| **Healthcare**             | Assisting in medical documentation and preliminary diagnosis support.   |
+
+
+\`\`\`python
+from llm_library import LLMModel
+
+# Initialize the LLM
+model = LLMModel(api_key='YOUR_API_KEY')
+
+# Generate a response based on user input
+user_input = "Explain the benefits of renewable energy."
+response = model.generate_text(user_input)
+
+print("LLM Response:", response)
+\`\`\`
+
+**Conclusion**
+LLMs are transforming the way we interact with technology by enabling more natural and efficient communication. With continuous advancements, these models are expected to become integral in various sectors, including customer service, content creation, translation, education, and healthcare.  By integrating diverse formats such as tables and code blocks, we can better illustrate the multifaceted nature of LLMs and their wide-ranging applications.
+`
+
+<Label>Component</Label>
+
+# Markdown Renderer
+
+Parses and beautifully renders markdowns returned by LLM.
+
+<Tabs defaultValue="preview" className="w-full">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <Card className="w-full p-8 items-center">
+      <MdRenderer value={markdownString} />
+    </Card>
+  </TabsContent>
+  <TabsContent value="code">
+    ```tsx page.tsx
+    import * as React from "react"
+    import { MdRenderer } from '@/components/ui/md-renderer';
+
+    const markdownString = `
+    Large Language Models (LLMs) are advanced artificial intelligence systems designed to understand and generate human-like text. They are built using deep learning techniques and trained on vast amounts of data, enabling them to perform a variety of language-related tasks.
+
+    - **Natural Language Understanding:** LLMs can interpret and generate coherent text based on the input they receive.
+    - **Versatility:** They are used in numerous applications, ranging from simple text generation to complex problem-solving.
+    - **Scalability:** LLMs can be scaled to handle larger datasets and more complex tasks over time.
+
+    Below is a table summarizing some of the promising uses of LLMs:
+
+    | **Application**            | **Description**                                                         |
+    |----------------------------|-------------------------------------------------------------------------|
+    | **Customer Support**       | Automating responses to common queries and providing 24/7 assistance.   |
+    | **Content Generation**     | Creating articles, summaries, and creative writing with minimal input.  |
+    | **Translation**            | Facilitating real-time and accurate translation between multiple languages. |
+    | **Education**              | Offering personalized tutoring and generating educational content.      |
+    | **Healthcare**             | Assisting in medical documentation and preliminary diagnosis support.   |
+
+
+    \`\`\`python
+    from llm_library import LLMModel
+
+    # Initialize the LLM
+    model = LLMModel(api_key='YOUR_API_KEY')
+
+    # Generate a response based on user input
+    user_input = "Explain the benefits of renewable energy."
+    response = model.generate_text(user_input)
+
+    print("LLM Response:", response)
+    \`\`\`
+
+    **Conclusion**
+    LLMs are transforming the way we interact with technology by enabling more natural and efficient communication. With continuous advancements, these models are expected to become integral in various sectors, including customer service, content creation, translation, education, and healthcare.  By integrating diverse formats such as tables and code blocks, we can better illustrate the multifaceted nature of LLMs and their wide-ranging applications.
+    `;
+
+    export function MdRendererDemo() {
+      return (
+        <MdRenderer value={markdownString} />
+      )
+    }
+    ```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Steps>
+  <Step title='Install dependencies'>
+  
+  ```bash
+  npm install @mdx-js/mdx remark-gfm react-syntax-highlighter @types/react-syntax-highlighter
+  ```
+  </Step>
+  <Step title="Add component">
+    Copy and paste the code into your project’s component directory.
+
+    The recommended file name is `agents-kit/chat-actions.tsx`.
+
+    <CodeBlockWrapper>
+    ```tsx
+    "use client";
+
+    import React, {
+      ClassAttributes,
+      FC,
+      HTMLAttributes,
+      ReactNode,
+      useEffect,
+      useState,
+    } from "react";
+    import { compile, run } from "@mdx-js/mdx";
+    import * as runtime from "react/jsx-runtime";
+    import remarkGfm from "remark-gfm";
+    import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+    import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+    import { cn } from "@/lib/utils";
+    import { CopyToClipboard } from "@/components/agents-kit/copy-to-clipboard";
+
+    const Pre = ({
+      children,
+      ...props
+    }: ClassAttributes<HTMLPreElement> & HTMLAttributes<HTMLPreElement>) => {
+      if (!children || typeof children !== "object") {
+        return <code {...props}>{children}</code>;
+      }
+      const childType = "type" in children ? children.type : "";
+      if (childType !== "code") {
+        return <code {...props}>{children}</code>;
+      }
+
+      const childProps = "props" in children ? children.props : {};
+      const { className, children: code } =
+        childProps as HTMLAttributes<HTMLElement>;
+      const language = className?.replace("language-", "");
+
+      return (
+        <div className="text-sm relative">
+          <SyntaxHighlighter language={language} style={oneLight}>
+            {String(code).replace(/\n$/, "")}
+          </SyntaxHighlighter>
+          <div className="absolute top-0 right-0 p-1">
+            <CopyToClipboard value={String(code)} variant={"ghost"} />
+          </div>
+        </div>
+      );
+    };
+
+    type MdRendererProps = {
+      value?: string;
+    } & HTMLAttributes<HTMLDivElement>;
+
+    const MdRenderer: FC<MdRendererProps> = ({
+      value = "",
+      className = "w-full max-w-ful",
+      ...props
+    }) => {
+      const [Complied, setCompiled] = useState<ReactNode | undefined>();
+
+      useEffect(() => {
+        compile(value, {
+          format: "mdx",
+          outputFormat: "function-body",
+          remarkPlugins: [remarkGfm],
+        }).then((content) => {
+          run(content, runtime).then((content) => {
+            const { default: Content } = content;
+            setCompiled(
+              <Content
+                components={{
+                  pre: Pre,
+                }}
+              ></Content>
+            );
+          });
+        });
+      }, [value]);
+
+      return (
+        <div className={cn("relative", className)} {...props}>
+          {Complied}
+        </div>
+      );
+    };
+
+    export { MdRenderer };
+
+    ```
+    </CodeBlockWrapper>
+  </Step>
+</Steps>
