@@ -47,7 +47,7 @@ export function SiteHeader() {
                 Docs
               </Link>
             </nav>
-            <a href="https://github.com/morph-data/morph" target="_blank">
+            <a href="https://github.com/morph-data/agents-kit" target="_blank">
               <GithubIcon className="w-6 h-6" />
             </a>
           </div>
