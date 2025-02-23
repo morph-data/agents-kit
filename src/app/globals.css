@@ -114,3 +114,14 @@ body {
     @apply px-4 xl:px-6 mx-auto max-w-screen-2xl;
   }
 }
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

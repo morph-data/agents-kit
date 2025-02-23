@@ -137,3 +137,39 @@ import { ChatForm } from '@/registry/chat-form';
     </CodeBlockWrapper>
   </Step>
 </Steps>
+
+## Examples
+
+### With File Upload
+
+import { ChatFormWithFileUpload } from '@/components/docs/chat-form'
+
+<Tabs defaultValue="preview" className="w-full not-prose">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">
+    <Card className="w-full p-8 items-center">
+      <ChatFormWithFileUpload />
+    </Card>
+  </TabsContent>
+  <TabsContent value="code">
+    ```tsx page.tsx
+    "use client";
+
+    import { ChatForm } from "@/registry/chat-form";
+
+    export const ChatFormWithFileUpload = () => {
+      const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+          console.log(file);
+        }
+      };
+
+      return <ChatForm onFileChange={onFileChange} />;
+    };
+    ```
+  </TabsContent>
+</Tabs>

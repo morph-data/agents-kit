@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## What is Agents Kit?
+Agents Kit is a collection of components and utilities that help you build chat interfaces. It is designed to be flexible and easy to use, so you can focus on building your AI / chat experience.
 
-First, run the development server:
+Agents Kit is not a component library to be installed via npm, but rather a set of components that you can copy and paste into your project.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Example
+
+```tsx
+'use client';
+
+import { useChat } from '@ai-sdk/react';
+import { ChatForm } from '@/components/agents-kit/chat-form';
+import { ChatMessages } from '@/components/agents-kit/chat-messages';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
+export default function Home() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
+
+  return (
+    <div>
+      <ScrollArea style={{ flex: 1 }}>
+        <ChatMessages messages={messages} />
+      </ScrollArea>
+      <ChatForm
+        inputValue={input}
+        onInputChange={handleInputChange}
+        onSubmit={handleSubmit}
+      />
+    </div>
+  );
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Everything you need to set up to use Agents Kit.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Dependencies
 
-## Learn More
+Agents Kit depents on shadcn/ui. So you need to setup shadcn/ui first. https://ui.shadcn.com/docs/installation
 
-To learn more about Next.js, take a look at the following resources:
+If you are already using shadcn/ui, you can start using Agents Kit right away.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Where to start?
+First, take a look at the components and blocks. If you find one you like, feel free to copy and paste it into your project and give it a try.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+If you want to see a Next.js + Vercel AI SDK example, visit: https://agents-kit.vercel.app/docs/example/nextjs
 
-## Deploy on Vercel
+## Lisence
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Morph is [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) licensed.
