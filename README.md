@@ -1,7 +1,10 @@
 
 ![Agents Kit](/assets/agents-kit2.gif)
 
+Born at [Builders Weekend Hackathon](https://www.buildersweekend.co/)
+
 ## What is Agents Kit?
+
 Agents Kit is a collection of components and utilities that help you build chat interfaces. It is designed to be flexible and easy to use, so you can focus on building your AI / chat experience.
 
 Agents Kit is not a component library to be installed via npm, but rather a set of components that you can copy and paste into your project.
