@@ -11,7 +11,7 @@
     "@types/react-syntax-highlighter"
   ],
   "registryDependencies": [
-    "http://localhost:3284/r/copy-to-clipboard.json"
+    "https://agents-kit.vercel.app/r/copy-to-clipboard.json"
   ],
   "files": [
     {
