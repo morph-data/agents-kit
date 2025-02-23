@@ -2,6 +2,7 @@ import { Icon, LucideArrowRight } from "lucide-react";
 import { tieBow } from "@lucide/lab";
 import { ChatDemo } from "@/components/chat-demo";
 import ChatDemoCode from "@/components/chat-demo-code.mdx";
+import ShadcnInstall from "@/components/shadcn-install.mdx";
 
 export default function Home() {
   return (
@@ -43,6 +44,10 @@ export default function Home() {
           >
             Start building <LucideArrowRight />
           </a>
+        </div>
+
+        <div className="w-full xl:w-[80%] mx-auto px-4">
+          <ShadcnInstall />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
