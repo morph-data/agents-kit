@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "Agents Kit",
-  "homepage": "https://agents-kit.vercel.app",
+  "homepage": "https://agents-kit.dev",
   "items": [
     {
       "name": "autosize-textarea",
@@ -54,8 +54,8 @@
       "registryDependencies": [
         "card", 
         "dropdown-menu", 
-        "https://agents-kit.vercel.app/r/autosize-textarea.json", 
-        "https://agents-kit.vercel.app/r/chat-actions.json"
+        "https://agents-kit.dev/r/autosize-textarea.json", 
+        "https://agents-kit.dev/r/chat-actions.json"
       ],
       "files": [
         {
@@ -71,8 +71,8 @@
       "title": "Chat Messages",
       "description": "Listing chat messages.",
       "registryDependencies": [
-        "https://agents-kit.vercel.app/r/chat-bubble.json", 
-        "https://agents-kit.vercel.app/r/md-renderer.json"
+        "https://agents-kit.dev/r/chat-bubble.json", 
+        "https://agents-kit.dev/r/md-renderer.json"
       ],
       "files": [
         {
@@ -107,7 +107,7 @@
       "description": "Render markdown content.",
       "dependencies": ["@mdx-js/mdx", "remark-gfm", "react-syntax-highlighter", "@types/react-syntax-highlighter"],
       "registryDependencies": [
-        "https://agents-kit.vercel.app/r/copy-to-clipboard.json"
+        "https://agents-kit.dev/r/copy-to-clipboard.json"
       ],
       "files": [
         {

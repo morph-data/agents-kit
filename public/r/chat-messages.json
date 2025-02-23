@@ -5,8 +5,8 @@
   "title": "Chat Messages",
   "description": "Listing chat messages.",
   "registryDependencies": [
-    "https://agents-kit.vercel.app/r/chat-bubble.json",
-    "https://agents-kit.vercel.app/r/md-renderer.json"
+    "https://agents-kit.dev/r/chat-bubble.json",
+    "https://agents-kit.dev/r/md-renderer.json"
   ],
   "files": [
     {

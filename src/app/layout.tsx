@@ -17,7 +17,7 @@ const siteConfig = {
   name: "Agents Kit",
   description:
     "Copy-and-paste React components for LLM Apps. Works with shadcn/ui",
-  url: "https://agents-kit.vercel.app",
+  url: "https://agents-kit.dev",
 };
 
 export const metadata: Metadata = {

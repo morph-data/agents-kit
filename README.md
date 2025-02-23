@@ -50,7 +50,7 @@ If you are already using shadcn/ui, you can start using Agents Kit right away.
 ### Where to start?
 First, take a look at the components and blocks. If you find one you like, feel free to copy and paste it into your project and give it a try.
 
-If you want to see a Next.js + Vercel AI SDK example, visit: https://agents-kit.vercel.app/docs/example/nextjs
+If you want to see a Next.js + Vercel AI SDK example, visit: https://agents-kit.dev/docs/example/nextjs
 
 ## Lisence
 

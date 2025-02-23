@@ -10,8 +10,8 @@
   "registryDependencies": [
     "card",
     "dropdown-menu",
-    "https://agents-kit.vercel.app/r/autosize-textarea.json",
-    "https://agents-kit.vercel.app/r/chat-actions.json"
+    "https://agents-kit.dev/r/autosize-textarea.json",
+    "https://agents-kit.dev/r/chat-actions.json"
   ],
   "files": [
     {
