@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-messages",
+  "type": "registry:component",
+  "title": "Chat Messages",
+  "description": "Listing chat messages.",
+  "registryDependencies": [
+    "http://localhost:3284/r/chat-bubble.json",
+    "http://localhost:3284/r/md-renderer.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/agents-kit/chat-messages.tsx",
+      "content": "import React, { FC } from \"react\";\nimport { ChatBubble } from \"./chat-bubble\";\nimport { MdRenderer } from \"./md-renderer\";\n\n// Copied from Verce AI SDK Message interface\ninterface Message {\n  /**\n  A unique identifier for the message.\n   */\n  id: string;\n  /**\n  The timestamp of the message.\n   */\n  createdAt?: Date;\n  /**\n  Text content of the message.\n   */\n  content: string;\n  /**\n   * Additional attachments to be sent along with the message.\n   */\n  // experimental_attachments?: Attachment[];\n  role: \"system\" | \"user\" | \"assistant\" | \"data\";\n  // data?: JSONValue;\n  /**\n   * Additional message-specific information added on the server via StreamData\n   */\n  // annotations?: JSONValue[] | undefined;\n  /**\n  Tool invocations (that can be tool calls or tool results, depending on whether or not the invocation has finished)\n  that the assistant made as part of this message.\n   */\n  // toolInvocations?: Array<ToolInvocation>;\n}\n\nexport interface ChatMessagesProps {\n  messages: Message[];\n}\n\nconst ChatMessages: FC<ChatMessagesProps> = ({ messages }) => {\n  const getVariantFromRole = (role: Message[\"role\"]) => {\n    switch (role) {\n      case \"system\":\n        return \"supplementary\";\n      case \"user\":\n        return \"bubble\";\n      case \"assistant\":\n        return \"ghost\";\n      case \"data\":\n        return \"supplementary\";\n    }\n  };\n\n  const getClassFromRole = (role: Message[\"role\"]) => {\n    switch (role) {\n      case \"user\":\n        return \"text-right ml-auto\";\n      default:\n        return \"\";\n    }\n  };\n  return (\n    <div className=\"w-full grid grid-cols-1 gap-4\">\n      {messages.map((message) => (\n        <ChatBubble\n          key={message.id}\n          variant={getVariantFromRole(message.role)}\n          className={getClassFromRole(message.role)}\n        >\n          <MdRenderer value={message.content} />\n        </ChatBubble>\n      ))}\n    </div>\n  );\n};\n\nexport { ChatMessages };\n",
+      "type": "registry:component",
+      "target": "components/agents-kit/chat-messages.tsx"
+    }
+  ]
+}

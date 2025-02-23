@@ -1,8 +1,8 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { ChatForm } from "@/registry/chat-form";
-import { ChatMessages } from "@/registry/chat-messages";
+import { ChatForm } from "@/registry/agents-kit/chat-form";
+import { ChatMessages } from "@/registry/agents-kit/chat-messages";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function ChatDemo() {

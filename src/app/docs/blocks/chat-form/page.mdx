@@ -1,4 +1,4 @@
-import { ChatForm } from '@/registry/chat-form';
+import { ChatForm } from '@/registry/agents-kit/chat-form';
 
 
 <Label>Block</Label>
@@ -61,12 +61,15 @@ import { ChatForm } from '@/registry/chat-form';
     The recommended file name is `agents-kit/chat-form.tsx`.
     
     <CodeBlockWrapper>
+
     ```tsx
     "use client";
 
-    import React, { FC, PropsWithChildren, useRef } from "react";
-    import { LucideArrowUp, LucidePlus } from "lucide-react";
+    import React, { FC, KeyboardEvent, PropsWithChildren, useRef } from "react";
+    import { AutosizeTextarea } from "./autosize-textarea";
+    import { ChatActionIconButton, ChatActions } from "./chat-actions";
     import { Button } from "@/components/ui/button";
+    import { LucideArrowUp, LucidePlus } from "lucide-react";
     import { Card } from "@/components/ui/card";
     import {
       DropdownMenu,
@@ -74,8 +77,6 @@ import { ChatForm } from '@/registry/chat-form';
       DropdownMenuItem,
       DropdownMenuTrigger,
     } from "@/components/ui/dropdown-menu";
-    import { AutosizeTextarea } from "@/components/agents-kit/autosize-textarea";
-    import { ChatActionIconButton, ChatActions } from "@/components/agents-kit/chat-actions";
 
     export interface ChatFormProps {
       inputValue?: string;
@@ -92,6 +93,17 @@ import { ChatForm } from '@/registry/chat-form';
     const ChatForm: FC<PropsWithChildren<ChatFormProps>> = (props) => {
       const fileInputRef = useRef<HTMLInputElement>(null);
 
+      const submitButtonRef = useRef<HTMLButtonElement>(null);
+
+      const handleKeyDown = React.useCallback(
+        (e: KeyboardEvent<HTMLTextAreaElement>) => {
+          if (e.metaKey && e.key === "Enter") {
+            submitButtonRef.current?.click();
+          }
+        },
+        []
+      );
+
       return (
         <Card className="p-2 rounded-3xl shadow">
           <form onSubmit={props.onSubmit} className="grid grid-cols-1 gap-2">
@@ -103,26 +115,41 @@ import { ChatForm } from '@/registry/chat-form';
               variant={"ghost"}
               onChange={props.onInputChange}
               maxHeight={260}
+              onKeyDown={handleKeyDown}
             />
             <ChatActions>
               {props.onFileChange && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <ChatActionIconButton>
-                      <LucidePlus />
-                    </ChatActionIconButton>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem onClick={() => fileInputRef.current?.click()}>
-                      Upload from computer
-                    </DropdownMenuItem>
-                    <input ref={fileInputRef} type="file" className="hidden" />
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <ChatActionIconButton>
+                        <LucidePlus />
+                      </ChatActionIconButton>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        Upload from computer
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <input
+                    ref={fileInputRef}
+                    onChange={props.onFileChange}
+                    type="file"
+                    className="hidden"
+                  />
+                </>
               )}
               {props.actions}
               <div className="flex-1" />
-              <Button type="submit" size="icon" className="rounded-full">
+              <Button
+                ref={submitButtonRef}
+                type="submit"
+                size="icon"
+                className="rounded-full"
+              >
                 <LucideArrowUp />
               </Button>
             </ChatActions>
@@ -132,8 +159,8 @@ import { ChatForm } from '@/registry/chat-form';
     };
 
     export { ChatForm };
-
     ```
+
     </CodeBlockWrapper>
   </Step>
 </Steps>
@@ -158,17 +185,64 @@ import { ChatFormWithFileUpload } from '@/components/docs/chat-form'
     ```tsx page.tsx
     "use client";
 
-    import { ChatForm } from "@/registry/chat-form";
+    import { ChatForm } from "@/registry/agents-kit/chat-form";
+    import { LucideFile, LucideX } from "lucide-react";
+    import { useState } from "react";
+    import { Button } from "../ui/button";
+
+    export const FilePreview = ({
+      file,
+      onRemove,
+    }: {
+      file: File;
+      onRemove?: () => void;
+    }) => {
+      return (
+        <div className="py-2 px-3 border rounded-2xl">
+          <div className="flex items-center gap-2 text-sm">
+            <LucideFile />
+            <span>{file.name}</span>
+            <Button
+              size={"icon"}
+              variant={"secondary"}
+              className="text-xs h-6 w-6"
+              onClick={onRemove}
+            >
+              <LucideX />
+            </Button>
+          </div>
+        </div>
+      );
+    };
 
     export const ChatFormWithFileUpload = () => {
+      const [files, setFiles] = useState<File[]>([]);
+
       const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("onFileChange");
         const file = e.target.files?.[0];
         if (file) {
-          console.log(file);
+          setFiles([...files, file]);
         }
       };
 
-      return <ChatForm onFileChange={onFileChange} />;
+      const removeFileAtIndex = (index: number) => {
+        setFiles(files.filter((_, i) => i !== index));
+      };
+
+      return (
+        <ChatForm onFileChange={onFileChange}>
+          <div className="flex items-center gap-2 flex-wrap">
+            {files.map((file, index) => (
+              <FilePreview
+                key={index}
+                file={file}
+                onRemove={() => removeFileAtIndex(index)}
+              />
+            ))}
+          </div>
+        </ChatForm>
+      );
     };
     ```
   </TabsContent>

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "md-renderer",
+  "type": "registry:component",
+  "title": "Markdown Renderer",
+  "description": "Render markdown content.",
+  "dependencies": [
+    "@mdx-js/mdx",
+    "remark-gfm",
+    "react-syntax-highlighter",
+    "@types/react-syntax-highlighter"
+  ],
+  "registryDependencies": [
+    "http://localhost:3284/r/copy-to-clipboard.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/agents-kit/md-renderer.tsx",
+      "content": "\"use client\";\n\nimport React, {\n  ClassAttributes,\n  FC,\n  HTMLAttributes,\n  ReactNode,\n  useEffect,\n  useState,\n} from \"react\";\nimport { compile, run } from \"@mdx-js/mdx\";\nimport * as runtime from \"react/jsx-runtime\";\nimport remarkGfm from \"remark-gfm\";\nimport { Prism as SyntaxHighlighter } from \"react-syntax-highlighter\";\nimport { oneLight } from \"react-syntax-highlighter/dist/esm/styles/prism\";\n\nimport { cn } from \"@/lib/utils\";\nimport { CopyToClipboard } from \"@/components/ui/copy-to-clipboard\";\n\nconst Pre = ({\n  children,\n  ...props\n}: ClassAttributes<HTMLPreElement> & HTMLAttributes<HTMLPreElement>) => {\n  if (!children || typeof children !== \"object\") {\n    return <code {...props}>{children}</code>;\n  }\n  const childType = \"type\" in children ? children.type : \"\";\n  if (childType !== \"code\") {\n    return <code {...props}>{children}</code>;\n  }\n\n  const childProps = \"props\" in children ? children.props : {};\n  const { className, children: code } =\n    childProps as HTMLAttributes<HTMLElement>;\n  const language = className?.replace(\"language-\", \"\");\n\n  return (\n    <div className=\"text-sm relative\">\n      <SyntaxHighlighter language={language} style={oneLight}>\n        {String(code).replace(/\\n$/, \"\")}\n      </SyntaxHighlighter>\n      <div className=\"absolute top-0 right-0 p-1\">\n        <CopyToClipboard value={String(code)} variant={\"ghost\"} />\n      </div>\n    </div>\n  );\n};\n\ntype MdRendererProps = {\n  value?: string;\n} & HTMLAttributes<HTMLDivElement>;\n\nconst MdRenderer: FC<MdRendererProps> = ({\n  value = \"\",\n  className = \"w-full max-w-ful\",\n  ...props\n}) => {\n  const [Complied, setCompiled] = useState<ReactNode | undefined>();\n\n  useEffect(() => {\n    compile(value, {\n      format: \"mdx\",\n      outputFormat: \"function-body\",\n      remarkPlugins: [remarkGfm],\n    }).then((content) => {\n      run(content, runtime).then((content) => {\n        const { default: Content } = content;\n        setCompiled(\n          <Content\n            components={{\n              pre: Pre,\n            }}\n          ></Content>\n        );\n      });\n    });\n  }, [value]);\n\n  return (\n    <div className={cn(\"relative\", className)} {...props}>\n      {Complied}\n    </div>\n  );\n};\n\nexport { MdRenderer };\n",
+      "type": "registry:component",
+      "target": "components/agents-kit/md-renderer.tsx"
+    }
+  ]
+}

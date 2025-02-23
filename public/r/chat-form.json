@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-form",
+  "type": "registry:component",
+  "title": "Chat Form",
+  "description": "A chat form component.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "card",
+    "dropdown-menu",
+    "http://localhost:3284/r/autosize-textarea.json",
+    "http://localhost:3284/r/chat-actions.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/agents-kit/chat-form.tsx",
+      "content": "\"use client\";\n\nimport React, { FC, KeyboardEvent, PropsWithChildren, useRef } from \"react\";\nimport { AutosizeTextarea } from \"./autosize-textarea\";\nimport { ChatActionIconButton, ChatActions } from \"./chat-actions\";\nimport { Button } from \"@/components/ui/button\";\nimport { LucideArrowUp, LucidePlus } from \"lucide-react\";\nimport { Card } from \"@/components/ui/card\";\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger,\n} from \"@/components/ui/dropdown-menu\";\n\nexport interface ChatFormProps {\n  inputValue?: string;\n  onInputChange?: (\n    e:\n      | React.ChangeEvent<HTMLInputElement>\n      | React.ChangeEvent<HTMLTextAreaElement>\n  ) => void;\n  onFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;\n  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;\n  actions?: React.ReactNode;\n}\n\nconst ChatForm: FC<PropsWithChildren<ChatFormProps>> = (props) => {\n  const fileInputRef = useRef<HTMLInputElement>(null);\n\n  const submitButtonRef = useRef<HTMLButtonElement>(null);\n\n  const handleKeyDown = React.useCallback(\n    (e: KeyboardEvent<HTMLTextAreaElement>) => {\n      if (e.metaKey && e.key === \"Enter\") {\n        submitButtonRef.current?.click();\n      }\n    },\n    []\n  );\n\n  return (\n    <Card className=\"p-2 rounded-3xl shadow\">\n      <form onSubmit={props.onSubmit} className=\"grid grid-cols-1 gap-2\">\n        {props.children}\n        <AutosizeTextarea\n          value={props.inputValue}\n          placeholder=\"Type a message...\"\n          className=\"resize-none\"\n          variant={\"ghost\"}\n          onChange={props.onInputChange}\n          maxHeight={260}\n          onKeyDown={handleKeyDown}\n        />\n        <ChatActions>\n          {props.onFileChange && (\n            <>\n              <DropdownMenu>\n                <DropdownMenuTrigger>\n                  <ChatActionIconButton>\n                    <LucidePlus />\n                  </ChatActionIconButton>\n                </DropdownMenuTrigger>\n                <DropdownMenuContent>\n                  <DropdownMenuItem\n                    onClick={() => fileInputRef.current?.click()}\n                  >\n                    Upload from computer\n                  </DropdownMenuItem>\n                </DropdownMenuContent>\n              </DropdownMenu>\n              <input\n                ref={fileInputRef}\n                onChange={props.onFileChange}\n                type=\"file\"\n                className=\"hidden\"\n              />\n            </>\n          )}\n          {props.actions}\n          <div className=\"flex-1\" />\n          <Button\n            ref={submitButtonRef}\n            type=\"submit\"\n            size=\"icon\"\n            className=\"rounded-full\"\n          >\n            <LucideArrowUp />\n          </Button>\n        </ChatActions>\n      </form>\n    </Card>\n  );\n};\n\nexport { ChatForm };\n",
+      "type": "registry:component",
+      "target": "components/agents-kit/chat-form.tsx"
+    }
+  ]
+}

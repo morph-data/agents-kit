@@ -1,0 +1,121 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "Agents Kit",
+  "homepage": "https://agents-kit.vercel.app",
+  "items": [
+    {
+      "name": "autosize-textarea",
+      "type": "registry:component",
+      "title": "Autosize Textarea",
+      "description": "A textarea that grows with content.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "src/registry/agents-kit/autosize-textarea.tsx",
+          "type": "registry:component",
+          "target": "components/agents-kit/autosize-textarea.tsx"
+        }
+      ]
+    },
+    {
+      "name": "chat-actions",
+      "type": "registry:component",
+      "title": "Chat Actions",
+      "description": "Componennts for actions elements for chat form.",
+      "registryDependencies": ["button", "toggle"],
+      "files": [
+        {
+          "path": "src/registry/agents-kit/chat-actions.tsx",
+          "type": "registry:component",
+          "target": "components/agents-kit/chat-actions.tsx"
+        }
+      ]
+    },
+    {
+      "name": "chat-bubble",
+      "type": "registry:component",
+      "title": "Chat Bubble",
+      "description": "A chat bubble component.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "src/registry/agents-kit/chat-bubble.tsx",
+          "type": "registry:component",
+          "target": "components/agents-kit/chat-bubble.tsx"
+        }
+      ]
+    },
+    {
+      "name": "chat-form",
+      "type": "registry:component",
+      "title": "Chat Form",
+      "description": "A chat form component.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "card", 
+        "dropdown-menu", 
+        "https://agents-kit.vercel.app/r/autosize-textarea.json", 
+        "https://agents-kit.vercel.app/r/chat-actions.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/agents-kit/chat-form.tsx",
+          "type": "registry:component",
+          "target": "components/agents-kit/chat-form.tsx"
+        }
+      ]
+    },
+    {
+      "name": "chat-messages",
+      "type": "registry:component",
+      "title": "Chat Messages",
+      "description": "Listing chat messages.",
+      "registryDependencies": [
+        "https://agents-kit.vercel.app/r/chat-bubble.json", 
+        "https://agents-kit.vercel.app/r/md-renderer.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/agents-kit/chat-messages.tsx",
+          "type": "registry:component",
+          "target": "components/agents-kit/chat-messages.tsx"
+        }
+      ]
+    },
+    {
+      "name": "copy-to-clipboard",
+      "type": "registry:component",
+      "title": "Copy to Clipbloard",
+      "description": "Copy to clipboard button for codeblocks.",
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
+      "registryDependencies": [
+        "button", 
+        "tooltip"
+      ],
+      "files": [
+        {
+          "path": "src/registry/agents-kit/copy-to-clipboard.tsx",
+          "type": "registry:component",
+          "target": "components/agents-kit/copy-to-clipboard.tsx"
+        }
+      ]
+    },
+    {
+      "name": "md-renderer",
+      "type": "registry:component",
+      "title": "Markdown Renderer",
+      "description": "Render markdown content.",
+      "dependencies": ["@mdx-js/mdx", "remark-gfm", "react-syntax-highlighter", "@types/react-syntax-highlighter"],
+      "registryDependencies": [
+        "https://agents-kit.vercel.app/r/copy-to-clipboard.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/agents-kit/md-renderer.tsx",
+          "type": "registry:component",
+          "target": "components/agents-kit/md-renderer.tsx"
+        }
+      ]
+    }
+  ]
+}
