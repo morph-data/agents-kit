@@ -1,5 +1,5 @@
 
-![Agents Kit](/assets/agents-kit.gif)
+![Agents Kit](/assets/agents-kit2.gif)
 
 ## What is Agents Kit?
 Agents Kit is a collection of components and utilities that help you build chat interfaces. It is designed to be flexible and easy to use, so you can focus on building your AI / chat experience.
