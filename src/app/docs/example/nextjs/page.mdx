@@ -12,3 +12,29 @@
     allowFullScreen
   ></iframe>
 </Card>
+
+## How to start
+
+<Steps>
+  <Step title="Initialize Next.js Project">
+    ```bash
+    npx create-next-app@latest chat-app
+    ```
+  </Step>
+  <Step title="Install Vercel AI SDK">
+    ```bash
+    npm install @ai-sdk/react
+    ```
+  </Step>
+  <Step title="Install shadcn/ui">
+    ```bash
+    npx shadcn@latest init
+    ```
+  </Step>
+  <Step title="Install Agents Kit">
+    ```bash
+    npx shadcn@latest add http://agents-kit.vercel.app/r/chat-messages.json
+    npx shadcn@latest add http://agents-kit.vercel.app/r/chat-form.json
+    ```
+  </Step>
+</Steps>
