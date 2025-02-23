@@ -98,100 +98,113 @@ Isn't it fascinating how our neighboring planets have such unique characteristic
 
 ## Installation
 
-<Steps>
-  <Step title='Install dependencies'>
-    1. Add agents-kit components.
-    - [ChatBubble](/docs/components/chat-bubble)
-    - [MdRenderer](/docs/components/md-renderer)
-  </Step>
-  <Step title="Add component">
-    Copy and paste the code into your project’s component directory.
-
-    The recommended file name is `agents-kit/chat-messages.tsx`.
-
-    <CodeBlockWrapper>
-    ```tsx
-    "use client";
-
-    import React, { FC } from "react";
-    import { ChatBubble } from "@/components/agents-kit/chat-bubble";
-    import { MdRenderer } from "@/components/agents-kit/md-renderer";
-
-    // Copied from Verce AI SDK Message interface
-    interface Message {
-      /**
-      A unique identifier for the message.
-      */
-      id: string;
-      /**
-      The timestamp of the message.
-      */
-      createdAt?: Date;
-      /**
-      Text content of the message.
-      */
-      content: string;
-      /**
-      * Additional attachments to be sent along with the message.
-      */
-      // experimental_attachments?: Attachment[];
-      role: "system" | "user" | "assistant" | "data";
-      // data?: JSONValue;
-      /**
-      * Additional message-specific information added on the server via StreamData
-      */
-      // annotations?: JSONValue[] | undefined;
-      /**
-      Tool invocations (that can be tool calls or tool results, depending on whether or not the invocation has finished)
-      that the assistant made as part of this message.
-      */
-      // toolInvocations?: Array<ToolInvocation>;
-    }
-
-    export interface ChatMessagesProps {
-      messages: Message[];
-    }
-
-    const ChatMessages: FC<ChatMessagesProps> = ({ messages }) => {
-      const getVariantFromRole = (role: Message["role"]) => {
-        switch (role) {
-          case "system":
-            return "supplementary";
-          case "user":
-            return "bubble";
-          case "assistant":
-            return "ghost";
-          case "data":
-            return "supplementary";
-        }
-      };
-
-      const getClassFromRole = (role: Message["role"]) => {
-        switch (role) {
-          case "user":
-            return "text-right ml-auto";
-          default:
-            return "";
-        }
-      };
-      return (
-        <div className="w-full grid grid-cols-1 gap-4">
-          {messages.map((message) => (
-            <ChatBubble
-              key={message.id}
-              variant={getVariantFromRole(message.role)}
-              className={getClassFromRole(message.role)}
-            >
-              <MdRenderer value={message.content} />
-            </ChatBubble>
-          ))}
-        </div>
-      );
-    };
-
-    export { ChatMessages };
-
+<Tabs defaultValue="cli" className="w-full">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash
+    npx shadcn@latest add http://agents-kit.vercel.app/r/chat-messages.json
     ```
-    </CodeBlockWrapper>
-  </Step>
-</Steps>
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step title='Install dependencies'>
+        1. Add agents-kit components.
+        - [ChatBubble](/docs/components/chat-bubble)
+        - [MdRenderer](/docs/components/md-renderer)
+      </Step>
+      <Step title="Add component">
+        Copy and paste the code into your project’s component directory.
+
+        The recommended file name is `agents-kit/chat-messages.tsx`.
+
+        <CodeBlockWrapper>
+        ```tsx
+        "use client";
+
+        import React, { FC } from "react";
+        import { ChatBubble } from "@/components/agents-kit/chat-bubble";
+        import { MdRenderer } from "@/components/agents-kit/md-renderer";
+
+        // Copied from Verce AI SDK Message interface
+        interface Message {
+          /**
+          A unique identifier for the message.
+          */
+          id: string;
+          /**
+          The timestamp of the message.
+          */
+          createdAt?: Date;
+          /**
+          Text content of the message.
+          */
+          content: string;
+          /**
+          * Additional attachments to be sent along with the message.
+          */
+          // experimental_attachments?: Attachment[];
+          role: "system" | "user" | "assistant" | "data";
+          // data?: JSONValue;
+          /**
+          * Additional message-specific information added on the server via StreamData
+          */
+          // annotations?: JSONValue[] | undefined;
+          /**
+          Tool invocations (that can be tool calls or tool results, depending on whether or not the invocation has finished)
+          that the assistant made as part of this message.
+          */
+          // toolInvocations?: Array<ToolInvocation>;
+        }
+
+        export interface ChatMessagesProps {
+          messages: Message[];
+        }
+
+        const ChatMessages: FC<ChatMessagesProps> = ({ messages }) => {
+          const getVariantFromRole = (role: Message["role"]) => {
+            switch (role) {
+              case "system":
+                return "supplementary";
+              case "user":
+                return "bubble";
+              case "assistant":
+                return "ghost";
+              case "data":
+                return "supplementary";
+            }
+          };
+
+          const getClassFromRole = (role: Message["role"]) => {
+            switch (role) {
+              case "user":
+                return "text-right ml-auto";
+              default:
+                return "";
+            }
+          };
+          return (
+            <div className="w-full grid grid-cols-1 gap-4">
+              {messages.map((message) => (
+                <ChatBubble
+                  key={message.id}
+                  variant={getVariantFromRole(message.role)}
+                  className={getClassFromRole(message.role)}
+                >
+                  <MdRenderer value={message.content} />
+                </ChatBubble>
+              ))}
+            </div>
+          );
+        };
+
+        export { ChatMessages };
+
+        ```
+        </CodeBlockWrapper>
+      </Step>
+    </Steps>
+  </TabsContent>
+</Tabs>

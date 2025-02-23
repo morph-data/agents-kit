@@ -101,108 +101,121 @@ Parses and beautifully renders markdowns returned by LLM.
 
 ## Installation
 
-<Steps>
-  <Step title='Install dependencies'>
-  
-  ```bash
-  npm install @mdx-js/mdx remark-gfm react-syntax-highlighter @types/react-syntax-highlighter
-  ```
-  </Step>
-  <Step title="Add component">
-    Copy and paste the code into your project’s component directory.
-
-    The recommended file name is `agents-kit/chat-actions.tsx`.
-
-    <CodeBlockWrapper>
-    ```tsx
-    "use client";
-
-    import React, {
-      ClassAttributes,
-      FC,
-      HTMLAttributes,
-      ReactNode,
-      useEffect,
-      useState,
-    } from "react";
-    import { compile, run } from "@mdx-js/mdx";
-    import * as runtime from "react/jsx-runtime";
-    import remarkGfm from "remark-gfm";
-    import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-    import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
-
-    import { cn } from "@/lib/utils";
-    import { CopyToClipboard } from "@/components/agents-kit/copy-to-clipboard";
-
-    const Pre = ({
-      children,
-      ...props
-    }: ClassAttributes<HTMLPreElement> & HTMLAttributes<HTMLPreElement>) => {
-      if (!children || typeof children !== "object") {
-        return <code {...props}>{children}</code>;
-      }
-      const childType = "type" in children ? children.type : "";
-      if (childType !== "code") {
-        return <code {...props}>{children}</code>;
-      }
-
-      const childProps = "props" in children ? children.props : {};
-      const { className, children: code } =
-        childProps as HTMLAttributes<HTMLElement>;
-      const language = className?.replace("language-", "");
-
-      return (
-        <div className="text-sm relative">
-          <SyntaxHighlighter language={language} style={oneLight}>
-            {String(code).replace(/\n$/, "")}
-          </SyntaxHighlighter>
-          <div className="absolute top-0 right-0 p-1">
-            <CopyToClipboard value={String(code)} variant={"ghost"} />
-          </div>
-        </div>
-      );
-    };
-
-    type MdRendererProps = {
-      value?: string;
-    } & HTMLAttributes<HTMLDivElement>;
-
-    const MdRenderer: FC<MdRendererProps> = ({
-      value = "",
-      className = "w-full max-w-ful",
-      ...props
-    }) => {
-      const [Complied, setCompiled] = useState<ReactNode | undefined>();
-
-      useEffect(() => {
-        compile(value, {
-          format: "mdx",
-          outputFormat: "function-body",
-          remarkPlugins: [remarkGfm],
-        }).then((content) => {
-          run(content, runtime).then((content) => {
-            const { default: Content } = content;
-            setCompiled(
-              <Content
-                components={{
-                  pre: Pre,
-                }}
-              ></Content>
-            );
-          });
-        });
-      }, [value]);
-
-      return (
-        <div className={cn("relative", className)} {...props}>
-          {Complied}
-        </div>
-      );
-    };
-
-    export { MdRenderer };
-
+<Tabs defaultValue="cli" className="w-full">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+    ```bash
+    npx shadcn@latest add http://agents-kit.vercel.app/r/md-renderer.json
     ```
-    </CodeBlockWrapper>
-  </Step>
-</Steps>
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step title='Install dependencies'>
+      
+      ```bash
+      npm install @mdx-js/mdx remark-gfm react-syntax-highlighter @types/react-syntax-highlighter
+      ```
+      </Step>
+      <Step title="Add component">
+        Copy and paste the code into your project’s component directory.
+
+        The recommended file name is `agents-kit/chat-actions.tsx`.
+
+        <CodeBlockWrapper>
+        ```tsx
+        "use client";
+
+        import React, {
+          ClassAttributes,
+          FC,
+          HTMLAttributes,
+          ReactNode,
+          useEffect,
+          useState,
+        } from "react";
+        import { compile, run } from "@mdx-js/mdx";
+        import * as runtime from "react/jsx-runtime";
+        import remarkGfm from "remark-gfm";
+        import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+        import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+        import { cn } from "@/lib/utils";
+        import { CopyToClipboard } from "@/components/agents-kit/copy-to-clipboard";
+
+        const Pre = ({
+          children,
+          ...props
+        }: ClassAttributes<HTMLPreElement> & HTMLAttributes<HTMLPreElement>) => {
+          if (!children || typeof children !== "object") {
+            return <code {...props}>{children}</code>;
+          }
+          const childType = "type" in children ? children.type : "";
+          if (childType !== "code") {
+            return <code {...props}>{children}</code>;
+          }
+
+          const childProps = "props" in children ? children.props : {};
+          const { className, children: code } =
+            childProps as HTMLAttributes<HTMLElement>;
+          const language = className?.replace("language-", "");
+
+          return (
+            <div className="text-sm relative">
+              <SyntaxHighlighter language={language} style={oneLight}>
+                {String(code).replace(/\n$/, "")}
+              </SyntaxHighlighter>
+              <div className="absolute top-0 right-0 p-1">
+                <CopyToClipboard value={String(code)} variant={"ghost"} />
+              </div>
+            </div>
+          );
+        };
+
+        type MdRendererProps = {
+          value?: string;
+        } & HTMLAttributes<HTMLDivElement>;
+
+        const MdRenderer: FC<MdRendererProps> = ({
+          value = "",
+          className = "w-full max-w-ful",
+          ...props
+        }) => {
+          const [Complied, setCompiled] = useState<ReactNode | undefined>();
+
+          useEffect(() => {
+            compile(value, {
+              format: "mdx",
+              outputFormat: "function-body",
+              remarkPlugins: [remarkGfm],
+            }).then((content) => {
+              run(content, runtime).then((content) => {
+                const { default: Content } = content;
+                setCompiled(
+                  <Content
+                    components={{
+                      pre: Pre,
+                    }}
+                  ></Content>
+                );
+              });
+            });
+          }, [value]);
+
+          return (
+            <div className={cn("relative", className)} {...props}>
+              {Complied}
+            </div>
+          );
+        };
+
+        export { MdRenderer };
+
+        ```
+        </CodeBlockWrapper>
+      </Step>
+    </Steps>
+  </TabsContent>
+</Tabs>

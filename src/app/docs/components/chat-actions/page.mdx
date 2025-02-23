@@ -83,65 +83,78 @@ import { LucidePlus, LucideGlobe } from "lucide-react";
 
 ## Installation
 
-<Steps>
-  <Step title='Install dependencies'>
+<Tabs defaultValue="cli" className="w-full">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
     ```bash
-    npx shadcn@latest add button toggle
+    npx shadcn@latest add http://agents-kit.vercel.app/r/chat-actions.json
     ```
-  </Step>
-  <Step title="Add component">
-    Copy and paste the code into your project’s component directory.
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step title='Install dependencies'>
+        ```bash
+        npx shadcn@latest add button toggle
+        ```
+      </Step>
+      <Step title="Add component">
+        Copy and paste the code into your project’s component directory.
 
-    The recommended file name is `agents-kit/chat-actions.tsx`.
-    
-    <CodeBlockWrapper>
-    ```tsx
-    import React, {
-      ComponentProps,
-      FC,
-      HTMLAttributes,
-      PropsWithChildren,
-    } from "react";
-    import { cn } from "@/lib/utils";
-    import { Button, ButtonProps } from "@/components/ui/button";
-    import { Toggle } from "@/components/ui/toggle";
+        The recommended file name is `agents-kit/chat-actions.tsx`.
+        
+        <CodeBlockWrapper>
 
-    const ChatActionIconButton = ({ ...props }: ButtonProps) => {
-      return (
-        <Button
-          size="icon"
-          variant={"outline"}
-          className="rounded-full h-9 w-9"
-          {...props}
-        />
-      );
-    };
+        ```tsx
+        import React, {
+          ComponentProps,
+          FC,
+          HTMLAttributes,
+          PropsWithChildren,
+        } from "react";
+        import { cn } from "@/lib/utils";
+        import { Button, ButtonProps } from "@/components/ui/button";
+        import { Toggle } from "@/components/ui/toggle";
 
-    const ChatActionToggle = ({ ...props }: ComponentProps<typeof Toggle>) => {
-      return (
-        <Toggle
-          {...props}
-          variant="outline"
-          size="sm"
-          className="rounded-full focus-visible:ring-primary data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
-        />
-      );
-    };
+        const ChatActionIconButton = ({ ...props }: ButtonProps) => {
+          return (
+            <Button
+              size="icon"
+              variant={"outline"}
+              className="rounded-full h-9 w-9"
+              {...props}
+            />
+          );
+        };
 
-    const ChatActions: FC<PropsWithChildren<HTMLAttributes<HTMLDivElement>>> = ({
-      className,
-      ...props
-    }) => {
-      return (
-        <div className={cn("flex flex-wrap gap-2 items-center", className)}>
-          {props.children}
-        </div>
-      );
-    };
+        const ChatActionToggle = ({ ...props }: ComponentProps<typeof Toggle>) => {
+          return (
+            <Toggle
+              {...props}
+              variant="outline"
+              size="sm"
+              className="rounded-full focus-visible:ring-primary data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
+            />
+          );
+        };
 
-    export { ChatActions, ChatActionIconButton, ChatActionToggle };
+        const ChatActions: FC<PropsWithChildren<HTMLAttributes<HTMLDivElement>>> = ({
+          className,
+          ...props
+        }) => {
+          return (
+            <div className={cn("flex flex-wrap gap-2 items-center", className)}>
+              {props.children}
+            </div>
+          );
+        };
 
-    ```
-    </CodeBlockWrapper>
-  </Step>
-</Steps>
+        export { ChatActions, ChatActionIconButton, ChatActionToggle };
+        ```
+        </CodeBlockWrapper>
+      </Step>
+    </Steps>
+  </TabsContent>
+</Tabs>

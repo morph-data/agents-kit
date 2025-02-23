@@ -39,131 +39,144 @@ import { ChatForm } from '@/registry/agents-kit/chat-form';
 
 ## Installation
 
-<Steps>
-  <Step title='Install dependencies'>
-    1. Add shadcn/ui components.
+<Tabs defaultValue="cli" className="w-full not-prose">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
     ```bash
-    npx shadcn@latest add button card dropdown-menu
+    npx shadcn@latest add http://agents-kit.vercel.app/r/chat-form.json
     ```
+  </TabsContent>
+  <TabsContent value="manual">
+    <Steps>
+      <Step title='Install dependencies'>
+        1. Add shadcn/ui components.
+        ```bash
+        npx shadcn@latest add button card dropdown-menu
+        ```
 
-    2. Install dependencies.
-    ```bash
-    npm install lucide-react
-    ```
+        2. Install dependencies.
+        ```bash
+        npm install lucide-react
+        ```
 
-    3. Add agents-kit components.
-    - [AutosizeTextarea](/docs/components/autosize-textarea)
-    - [ChatActions, ChatActionIconButton](/docs/components/chat-actions)
-  </Step>
-  <Step title="Add component">
-    Copy and paste the code into your project’s component directory.
+        3. Add agents-kit components.
+        - [AutosizeTextarea](/docs/components/autosize-textarea)
+        - [ChatActions, ChatActionIconButton](/docs/components/chat-actions)
+      </Step>
+      <Step title="Add component">
+        Copy and paste the code into your project’s component directory.
 
-    The recommended file name is `agents-kit/chat-form.tsx`.
-    
-    <CodeBlockWrapper>
+        The recommended file name is `agents-kit/chat-form.tsx`.
+        
+        <CodeBlockWrapper>
 
-    ```tsx
-    "use client";
+        ```tsx
+        "use client";
 
-    import React, { FC, KeyboardEvent, PropsWithChildren, useRef } from "react";
-    import { AutosizeTextarea } from "./autosize-textarea";
-    import { ChatActionIconButton, ChatActions } from "./chat-actions";
-    import { Button } from "@/components/ui/button";
-    import { LucideArrowUp, LucidePlus } from "lucide-react";
-    import { Card } from "@/components/ui/card";
-    import {
-      DropdownMenu,
-      DropdownMenuContent,
-      DropdownMenuItem,
-      DropdownMenuTrigger,
-    } from "@/components/ui/dropdown-menu";
+        import React, { FC, KeyboardEvent, PropsWithChildren, useRef } from "react";
+        import { AutosizeTextarea } from "./autosize-textarea";
+        import { ChatActionIconButton, ChatActions } from "./chat-actions";
+        import { Button } from "@/components/ui/button";
+        import { LucideArrowUp, LucidePlus } from "lucide-react";
+        import { Card } from "@/components/ui/card";
+        import {
+          DropdownMenu,
+          DropdownMenuContent,
+          DropdownMenuItem,
+          DropdownMenuTrigger,
+        } from "@/components/ui/dropdown-menu";
 
-    export interface ChatFormProps {
-      inputValue?: string;
-      onInputChange?: (
-        e:
-          | React.ChangeEvent<HTMLInputElement>
-          | React.ChangeEvent<HTMLTextAreaElement>
-      ) => void;
-      onFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-      onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
-      actions?: React.ReactNode;
-    }
+        export interface ChatFormProps {
+          inputValue?: string;
+          onInputChange?: (
+            e:
+              | React.ChangeEvent<HTMLInputElement>
+              | React.ChangeEvent<HTMLTextAreaElement>
+          ) => void;
+          onFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+          onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+          actions?: React.ReactNode;
+        }
 
-    const ChatForm: FC<PropsWithChildren<ChatFormProps>> = (props) => {
-      const fileInputRef = useRef<HTMLInputElement>(null);
+        const ChatForm: FC<PropsWithChildren<ChatFormProps>> = (props) => {
+          const fileInputRef = useRef<HTMLInputElement>(null);
 
-      const submitButtonRef = useRef<HTMLButtonElement>(null);
+          const submitButtonRef = useRef<HTMLButtonElement>(null);
 
-      const handleKeyDown = React.useCallback(
-        (e: KeyboardEvent<HTMLTextAreaElement>) => {
-          if (e.metaKey && e.key === "Enter") {
-            submitButtonRef.current?.click();
-          }
-        },
-        []
-      );
+          const handleKeyDown = React.useCallback(
+            (e: KeyboardEvent<HTMLTextAreaElement>) => {
+              if (e.metaKey && e.key === "Enter") {
+                submitButtonRef.current?.click();
+              }
+            },
+            []
+          );
 
-      return (
-        <Card className="p-2 rounded-3xl shadow">
-          <form onSubmit={props.onSubmit} className="grid grid-cols-1 gap-2">
-            {props.children}
-            <AutosizeTextarea
-              value={props.inputValue}
-              placeholder="Type a message..."
-              className="resize-none"
-              variant={"ghost"}
-              onChange={props.onInputChange}
-              maxHeight={260}
-              onKeyDown={handleKeyDown}
-            />
-            <ChatActions>
-              {props.onFileChange && (
-                <>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <ChatActionIconButton>
-                        <LucidePlus />
-                      </ChatActionIconButton>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem
-                        onClick={() => fileInputRef.current?.click()}
-                      >
-                        Upload from computer
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                  <input
-                    ref={fileInputRef}
-                    onChange={props.onFileChange}
-                    type="file"
-                    className="hidden"
-                  />
-                </>
-              )}
-              {props.actions}
-              <div className="flex-1" />
-              <Button
-                ref={submitButtonRef}
-                type="submit"
-                size="icon"
-                className="rounded-full"
-              >
-                <LucideArrowUp />
-              </Button>
-            </ChatActions>
-          </form>
-        </Card>
-      );
-    };
+          return (
+            <Card className="p-2 rounded-3xl shadow">
+              <form onSubmit={props.onSubmit} className="grid grid-cols-1 gap-2">
+                {props.children}
+                <AutosizeTextarea
+                  value={props.inputValue}
+                  placeholder="Type a message..."
+                  className="resize-none"
+                  variant={"ghost"}
+                  onChange={props.onInputChange}
+                  maxHeight={260}
+                  onKeyDown={handleKeyDown}
+                />
+                <ChatActions>
+                  {props.onFileChange && (
+                    <>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <ChatActionIconButton>
+                            <LucidePlus />
+                          </ChatActionIconButton>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem
+                            onClick={() => fileInputRef.current?.click()}
+                          >
+                            Upload from computer
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      <input
+                        ref={fileInputRef}
+                        onChange={props.onFileChange}
+                        type="file"
+                        className="hidden"
+                      />
+                    </>
+                  )}
+                  {props.actions}
+                  <div className="flex-1" />
+                  <Button
+                    ref={submitButtonRef}
+                    type="submit"
+                    size="icon"
+                    className="rounded-full"
+                  >
+                    <LucideArrowUp />
+                  </Button>
+                </ChatActions>
+              </form>
+            </Card>
+          );
+        };
 
-    export { ChatForm };
-    ```
+        export { ChatForm };
+        ```
 
-    </CodeBlockWrapper>
-  </Step>
-</Steps>
+        </CodeBlockWrapper>
+      </Step>
+    </Steps>
+  </TabsContent>
+</Tabs>
 
 ## Examples
 
@@ -171,7 +184,7 @@ import { ChatForm } from '@/registry/agents-kit/chat-form';
 
 import { ChatFormWithFileUpload } from '@/components/docs/chat-form'
 
-<Tabs defaultValue="preview" className="w-full not-prose">
+<Tabs defaultValue="preview" className="w-full">
   <TabsList>
     <TabsTrigger value="preview">Preview</TabsTrigger>
     <TabsTrigger value="code">Code</TabsTrigger>
