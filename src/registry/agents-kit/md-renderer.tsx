@@ -15,7 +15,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 import { cn } from "@/lib/utils";
-import { CopyToClipboard } from "@/components/ui/copy-to-clipboard";
+import { CopyToClipboard } from "./copy-to-clipboard";
 
 const Pre = ({
   children,
