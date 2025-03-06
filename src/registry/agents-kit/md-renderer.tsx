@@ -1,15 +1,9 @@
+// agents-kit v0.0.1
+
 "use client";
 
-import React, {
-  ClassAttributes,
-  FC,
-  HTMLAttributes,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
-import { compile, run } from "@mdx-js/mdx";
-import * as runtime from "react/jsx-runtime";
+import React, { ClassAttributes, FC, HTMLAttributes } from "react";
+import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -55,30 +49,11 @@ const MdRenderer: FC<MdRendererProps> = ({
   className = "w-full max-w-ful",
   ...props
 }) => {
-  const [Complied, setCompiled] = useState<ReactNode | undefined>();
-
-  useEffect(() => {
-    compile(value, {
-      format: "mdx",
-      outputFormat: "function-body",
-      remarkPlugins: [remarkGfm],
-    }).then((content) => {
-      run(content, runtime).then((content) => {
-        const { default: Content } = content;
-        setCompiled(
-          <Content
-            components={{
-              pre: Pre,
-            }}
-          ></Content>
-        );
-      });
-    });
-  }, [value]);
-
   return (
     <div className={cn("relative", className)} {...props}>
-      {Complied}
+      <Markdown remarkPlugins={[remarkGfm]} components={{ pre: Pre }}>
+        {value}
+      </Markdown>
     </div>
   );
 };

@@ -1,3 +1,5 @@
+// agents-kit v0.0.1
+
 import React, { FC } from "react";
 import { ChatBubble } from "./chat-bubble";
 import { MdRenderer } from "./md-renderer";

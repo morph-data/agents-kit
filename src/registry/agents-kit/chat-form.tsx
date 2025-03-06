@@ -1,3 +1,5 @@
+// agents-kit v0.0.1
+
 "use client";
 
 import React, { FC, KeyboardEvent, PropsWithChildren, useRef } from "react";

@@ -1,3 +1,5 @@
+// agents-kit v0.0.1
+
 import React, { FC, HTMLAttributes, PropsWithChildren } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";

@@ -1,3 +1,5 @@
+// agents-kit v0.0.1
+
 import React, {
   ComponentProps,
   FC,

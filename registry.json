@@ -105,7 +105,7 @@
       "type": "registry:component",
       "title": "Markdown Renderer",
       "description": "Render markdown content.",
-      "dependencies": ["@mdx-js/mdx", "remark-gfm", "react-syntax-highlighter", "@types/react-syntax-highlighter"],
+      "dependencies": ["react-markdown", "remark-gfm", "react-syntax-highlighter", "@types/react-syntax-highlighter"],
       "registryDependencies": [
         "https://agents-kit.dev/r/copy-to-clipboard.json"
       ],
