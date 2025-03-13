@@ -1,4 +1,4 @@
-// agents-kit v0.0.1
+// agents-kit v0.0.2
 
 import React, { FC } from "react";
 import { ChatBubble } from "./chat-bubble";
@@ -37,9 +37,10 @@ interface Message {
 
 export interface ChatMessagesProps {
   messages: Message[];
+  status?: string;
 }
 
-const ChatMessages: FC<ChatMessagesProps> = ({ messages }) => {
+const ChatMessages: FC<ChatMessagesProps> = ({ messages, status }) => {
   const getVariantFromRole = (role: Message["role"]) => {
     switch (role) {
       case "system":
@@ -63,13 +64,16 @@ const ChatMessages: FC<ChatMessagesProps> = ({ messages }) => {
   };
   return (
     <div className="w-full grid grid-cols-1 gap-4">
-      {messages.map((message) => (
+      {messages.map((message, i) => (
         <ChatBubble
           key={message.id}
           variant={getVariantFromRole(message.role)}
           className={getClassFromRole(message.role)}
         >
-          <MdRenderer value={message.content} />
+          <MdRenderer
+            value={message.content}
+            isLoading={i === messages.length - 1 && status === "streaming"}
+          />
         </ChatBubble>
       ))}
     </div>

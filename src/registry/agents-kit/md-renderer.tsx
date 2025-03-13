@@ -1,4 +1,4 @@
-// agents-kit v0.0.1
+// agents-kit v0.0.2
 
 "use client";
 
@@ -10,6 +10,69 @@ import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 import { cn } from "@/lib/utils";
 import { CopyToClipboard } from "./copy-to-clipboard";
+
+import { Root, Element } from "hast";
+import { Plugin } from "unified";
+
+interface RehypeLoadingSpanOptions {
+  isLoading?: boolean;
+}
+
+const voidElements = new Set([
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr",
+]);
+
+const rehypeLoadingSpan: Plugin<[RehypeLoadingSpanOptions?], Root> = (
+  options = { isLoading: false }
+) => {
+  return (tree: Root) => {
+    if (!options.isLoading) return;
+    if (!tree.children || tree.children.length === 0) return;
+
+    const spanNode: Element = {
+      type: "element",
+      tagName: "span",
+      properties: {
+        className: [
+          "inline-block",
+          "w-3",
+          "h-3",
+          "bg-primary",
+          "rounded-full",
+          "animate-bounce",
+          "ml-1",
+        ],
+      },
+      children: [],
+    };
+
+    const lastIndex = tree.children.length - 1;
+    const lastNode = tree.children[lastIndex];
+
+    if (lastNode.type === "element") {
+      if (voidElements.has(lastNode.tagName)) {
+        tree.children.push(spanNode);
+      } else if (Array.isArray(lastNode.children)) {
+        lastNode.children.push(spanNode);
+      }
+    } else {
+      tree.children.push(spanNode);
+    }
+  };
+};
 
 const Pre = ({
   children,
@@ -42,16 +105,22 @@ const Pre = ({
 
 type MdRendererProps = {
   value?: string;
+  isLoading?: boolean;
 } & HTMLAttributes<HTMLDivElement>;
 
 const MdRenderer: FC<MdRendererProps> = ({
   value = "",
   className = "w-full max-w-ful",
+  isLoading = false,
   ...props
 }) => {
   return (
     <div className={cn("relative", className)} {...props}>
-      <Markdown remarkPlugins={[remarkGfm]} components={{ pre: Pre }}>
+      <Markdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[[rehypeLoadingSpan, { isLoading }]]}
+        components={{ pre: Pre }}
+      >
         {value}
       </Markdown>
     </div>

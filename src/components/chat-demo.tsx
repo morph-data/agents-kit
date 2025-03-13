@@ -6,7 +6,8 @@ import { ChatMessages } from "@/registry/agents-kit/chat-messages";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function ChatDemo() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, status } =
+    useChat();
 
   return (
     <div
@@ -22,7 +23,7 @@ export function ChatDemo() {
       )}
       {messages.length > 0 && (
         <ScrollArea style={{ flex: 1 }}>
-          <ChatMessages messages={messages} />
+          <ChatMessages messages={messages} status={status} />
         </ScrollArea>
       )}
       <ChatForm

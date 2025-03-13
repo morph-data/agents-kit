@@ -12,7 +12,10 @@ import { ChatForm } from '@/registry/agents-kit/chat-form';
   </TabsList>
   <TabsContent value="preview">
     <Card className="w-full p-8 items-center">
-      <ChatForm />
+      <ChatForm 
+        laceholder="Type a message here"
+        submitButtonLabel="Send"
+      />
     </Card>
   </TabsContent>
   <TabsContent value="code">
