@@ -1,4 +1,4 @@
-// agents-kit v0.0.1
+// agents-kit v0.0.2
 
 "use client";
 

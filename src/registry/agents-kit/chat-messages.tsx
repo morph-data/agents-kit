@@ -1,4 +1,4 @@
-// agents-kit v0.0.1
+// agents-kit v0.0.2
 
 import React, { FC } from "react";
 import { ChatBubble } from "./chat-bubble";
