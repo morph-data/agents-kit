@@ -25,6 +25,8 @@ export interface ChatFormProps {
   onFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   actions?: React.ReactNode;
+  placeholder?: string;
+  submitButtonLabel?: string;
 }
 
 const ChatForm: FC<PropsWithChildren<ChatFormProps>> = (props) => {
@@ -47,7 +49,7 @@ const ChatForm: FC<PropsWithChildren<ChatFormProps>> = (props) => {
         {props.children}
         <AutosizeTextarea
           value={props.inputValue}
-          placeholder="Type a message..."
+          placeholder={props.placeholder || "Type a message..."}
           className="resize-none"
           variant={"ghost"}
           onChange={props.onInputChange}
@@ -84,10 +86,10 @@ const ChatForm: FC<PropsWithChildren<ChatFormProps>> = (props) => {
           <Button
             ref={submitButtonRef}
             type="submit"
-            size="icon"
+            size={props.submitButtonLabel ? "default" : "icon"}
             className="rounded-full"
           >
-            <LucideArrowUp />
+            {props.submitButtonLabel || <LucideArrowUp />}
           </Button>
         </ChatActions>
       </form>
