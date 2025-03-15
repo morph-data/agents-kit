@@ -8,8 +8,8 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-import { cn } from "@/lib/utils";
-import { CopyToClipboard } from "./copy-to-clipboard";
+import { cn } from "@/registry/agents-kit/lib/utils";
+import { CopyToClipboard } from "@/registry/agents-kit/copy-to-clipboard";
 
 import { Root, Element } from "hast";
 import { Plugin } from "unified";

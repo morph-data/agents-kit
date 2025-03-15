@@ -2,7 +2,7 @@
 
 import React, { FC, HTMLAttributes, PropsWithChildren } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import { cn } from "@/registry/agents-kit/lib/utils";
 
 const chatBubbleVariatnts = cva("p-4", {
   variants: {

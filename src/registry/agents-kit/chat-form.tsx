@@ -3,17 +3,20 @@
 "use client";
 
 import React, { FC, KeyboardEvent, PropsWithChildren, useRef } from "react";
-import { AutosizeTextarea } from "./autosize-textarea";
-import { ChatActionIconButton, ChatActions } from "./chat-actions";
-import { Button } from "@/components/ui/button";
+import { AutosizeTextarea } from "@/registry/agents-kit/autosize-textarea";
+import {
+  ChatActionIconButton,
+  ChatActions,
+} from "@/registry/agents-kit/chat-actions";
+import { Button } from "@/registry/agents-kit/ui/button";
 import { LucideArrowUp, LucidePlus } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/registry/agents-kit/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/registry/agents-kit/ui/dropdown-menu";
 
 export interface ChatFormProps {
   inputValue?: string;

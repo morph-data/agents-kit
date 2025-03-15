@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "registry:gen:dev": "node scripts/generate-registry.js http://localhost:3284 && npm run registry:build",
+    "registry:gen:build": "node scripts/generate-registry.js https://agents-kit.dev && npm run registry:build",
     "registry:build": "shadcn build"
   },
   "dependencies": {

@@ -5,7 +5,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Button } from "./ui/button";
 import { LucideClipboard } from "lucide-react";
-import { useCopyToClipboard } from "@/registry/hooks/use-copy-to-clipboard";
+import { useCopyToClipboard } from "@/registry/agents-kit/hooks/use-copy-to-clipboard";
 import {
   Tooltip,
   TooltipContent,

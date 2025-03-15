@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "message-area",
+  "type": "registry:component",
+  "title": "Message Area",
+  "description": "A scrollable area for chat messages.",
+  "dependencies": [
+    "@radix-ui/react-scroll-area"
+  ],
+  "files": [
+    {
+      "path": "src/registry/agents-kit/message-area.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport * as ScrollAreaPrimitive from \"@radix-ui/react-scroll-area\";\nimport { cn } from \"@/lib/utils\";\n\ninterface Message {\n  id: string;\n  content: string;\n  isStreaming?: boolean;\n}\n\ninterface MessageAreaProps\n  extends React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> {\n  messages: Message[];\n  status: \"streaming\" | \"finished\" | string; // 必要に応じてステータスを拡張\n}\n\nconst MessageArea = React.forwardRef<\n  React.ComponentRef<typeof ScrollAreaPrimitive.Root>,\n  MessageAreaProps\n>(({ messages, status, className, ...props }, ref) => {\n  const viewportRef = React.useRef<HTMLDivElement>(null);\n\n  // 自動スクロール用のエフェクト\n  React.useLayoutEffect(() => {\n    if (status === \"streaming\" && messages.length > 0) {\n      // Viewport のスクロール位置を一番下まで設定\n      viewportRef.current?.scrollTo({\n        top: viewportRef.current.scrollHeight,\n        behavior: \"smooth\",\n      });\n    }\n  }, [messages, status]);\n\n  return (\n    <ScrollAreaPrimitive.Root\n      ref={ref}\n      className={cn(\"relative overflow-hidden\", className)}\n      {...props}\n    >\n      <ScrollAreaPrimitive.Viewport\n        ref={viewportRef}\n        className=\"h-full w-full rounded-[inherit]\"\n      >\n        {props.children}\n      </ScrollAreaPrimitive.Viewport>\n      <ScrollBar />\n      <ScrollAreaPrimitive.Corner />\n    </ScrollAreaPrimitive.Root>\n  );\n});\nMessageArea.displayName = \"MessageArea\";\n\nconst ScrollBar = React.forwardRef<\n  React.ComponentRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,\n  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>\n>(({ className, orientation = \"vertical\", ...props }, ref) => (\n  <ScrollAreaPrimitive.ScrollAreaScrollbar\n    ref={ref}\n    orientation={orientation}\n    className={cn(\n      \"flex touch-none select-none transition-colors\",\n      orientation === \"vertical\" &&\n        \"h-full w-2.5 border-l border-l-transparent p-[1px]\",\n      orientation === \"horizontal\" &&\n        \"h-2.5 flex-col border-t border-t-transparent p-[1px]\",\n      className\n    )}\n    {...props}\n  >\n    <ScrollAreaPrimitive.ScrollAreaThumb className=\"relative flex-1 rounded-full bg-border\" />\n  </ScrollAreaPrimitive.ScrollAreaScrollbar>\n));\nScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;\n\nexport { MessageArea };\n",
+      "type": "registry:component"
+    }
+  ]
+}

@@ -7,13 +7,13 @@ import { Slot } from "@radix-ui/react-slot";
 import { VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/registry/agents-kit/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/registry/agents-kit/ui/tooltip";
 import { LucideClipboard } from "lucide-react";
 
 export interface CopyToClipboardProps

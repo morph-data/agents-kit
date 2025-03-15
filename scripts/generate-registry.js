@@ -1,16 +1,28 @@
-{
+/* eslint-disable @typescript-eslint/no-require-imports */
+const fs = require('fs');
+const path = require('path');
+
+// Get the base URL from the command line arguments (e.g., "http://localhost:3000")
+const args = process.argv.slice(2);
+if (args.length < 1) {
+  console.error("Usage: node scripts/generate-registry.js <baseUrl>");
+  process.exit(1);
+}
+const baseUrl = args[0];
+
+// Generate the registry JSON content with dynamic baseUrl substitution
+const registry = {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "agents-kit",
-  "homepage": "https://agents-kit.dev",
+  "homepage": baseUrl,
   "items": [
+    // ui
     {
       "name": "autosize-textarea",
       "type": "registry:component",
       "title": "Autosize Textarea",
       "description": "A textarea that grows with content.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
+      "dependencies": ["class-variance-authority"],
       "files": [
         {
           "path": "src/registry/agents-kit/autosize-textarea.tsx",
@@ -23,10 +35,7 @@
       "type": "registry:component",
       "title": "Chat Actions",
       "description": "Componennts for actions elements for chat form.",
-      "registryDependencies": [
-        "button",
-        "toggle"
-      ],
+      "registryDependencies": ["button", "toggle"],
       "files": [
         {
           "path": "src/registry/agents-kit/chat-actions.tsx",
@@ -39,9 +48,7 @@
       "type": "registry:component",
       "title": "Chat Bubble",
       "description": "A chat bubble component.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
+      "dependencies": ["class-variance-authority"],
       "files": [
         {
           "path": "src/registry/agents-kit/chat-bubble.tsx",
@@ -54,14 +61,12 @@
       "type": "registry:component",
       "title": "Chat Form",
       "description": "A chat form component.",
-      "dependencies": [
-        "lucide-react"
-      ],
+      "dependencies": ["lucide-react"],
       "registryDependencies": [
-        "card",
-        "dropdown-menu",
-        "https://agents-kit.dev/r/autosize-textarea.json",
-        "https://agents-kit.dev/r/chat-actions.json"
+        "card", 
+        "dropdown-menu", 
+        `${baseUrl}/r/autosize-textarea.json`, 
+        `${baseUrl}/r/chat-actions.json`
       ],
       "files": [
         {
@@ -76,8 +81,8 @@
       "title": "Message Area",
       "description": "A message area component.",
       "registryDependencies": [
-        "https://agents-kit.dev/r/chat-bubble.json",
-        "https://agents-kit.dev/r/md-renderer.json"
+        `${baseUrl}/r/chat-bubble.json`, 
+        `${baseUrl}/r/md-renderer.json`
       ],
       "files": [
         {
@@ -92,8 +97,8 @@
       "title": "Chat Messages",
       "description": "Listing chat messages.",
       "registryDependencies": [
-        "https://agents-kit.dev/r/chat-bubble.json",
-        "https://agents-kit.dev/r/md-renderer.json"
+        `${baseUrl}/r/chat-bubble.json`, 
+        `${baseUrl}/r/md-renderer.json`
       ],
       "files": [
         {
@@ -107,13 +112,9 @@
       "type": "registry:component",
       "title": "Copy to Clipbloard",
       "description": "Copy to clipboard button for codeblocks.",
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "lucide-react"
-      ],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
       "registryDependencies": [
-        "button",
+        "button", 
         "tooltip"
       ],
       "files": [
@@ -128,16 +129,9 @@
       "type": "registry:component",
       "title": "Markdown Renderer",
       "description": "Render markdown content.",
-      "dependencies": [
-        "react-markdown",
-        "remark-gfm",
-        "react-syntax-highlighter",
-        "@types/react-syntax-highlighter",
-        "unified",
-        "hast"
-      ],
+      "dependencies": ["react-markdown", "remark-gfm", "react-syntax-highlighter", "@types/react-syntax-highlighter", "unified", "hast"],
       "registryDependencies": [
-        "https://agents-kit.dev/r/copy-to-clipboard.json"
+        `${baseUrl}/r/copy-to-clipboard.json`
       ],
       "files": [
         {
@@ -151,9 +145,7 @@
       "type": "registry:component",
       "title": "Message Area",
       "description": "A scrollable area for chat messages.",
-      "dependencies": [
-        "@radix-ui/react-scroll-area"
-      ],
+      "dependencies": ["@radix-ui/react-scroll-area"],
       "files": [
         {
           "path": "src/registry/agents-kit/message-area.tsx",
@@ -162,4 +154,11 @@
       ]
     }
   ]
-}
+};
+
+// Define the output file path (this example writes to the project root)
+const outputPath = path.join(__dirname, '..', 'registry.json');
+
+// Write the formatted JSON string to the file
+fs.writeFileSync(outputPath, JSON.stringify(registry, null, 2), 'utf-8');
+console.log(`Generated registry.json at ${outputPath}`);
