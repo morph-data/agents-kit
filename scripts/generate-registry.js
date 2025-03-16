@@ -57,25 +57,6 @@ const registry = {
       ]
     },
     {
-      "name": "chat-form",
-      "type": "registry:component",
-      "title": "Chat Form",
-      "description": "A chat form component.",
-      "dependencies": ["lucide-react"],
-      "registryDependencies": [
-        "card", 
-        "dropdown-menu", 
-        `${baseUrl}/r/autosize-textarea.json`, 
-        `${baseUrl}/r/chat-actions.json`
-      ],
-      "files": [
-        {
-          "path": "src/registry/agents-kit/chat-form.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
       "name": "message-area",
       "type": "registry:component",
       "title": "Message Area",
@@ -87,22 +68,6 @@ const registry = {
       "files": [
         {
           "path": "src/registry/agents-kit/message-area.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "chat-messages",
-      "type": "registry:component",
-      "title": "Chat Messages",
-      "description": "Listing chat messages.",
-      "registryDependencies": [
-        `${baseUrl}/r/chat-bubble.json`, 
-        `${baseUrl}/r/md-renderer.json`
-      ],
-      "files": [
-        {
-          "path": "src/registry/agents-kit/chat-messages.tsx",
           "type": "registry:component"
         }
       ]
@@ -152,7 +117,43 @@ const registry = {
           "type": "registry:component"
         }
       ]
-    }
+    },
+    // blocks
+    {
+      "name": "chat-messages",
+      "type": "registry:component",
+      "title": "Chat Messages",
+      "description": "Listing chat messages.",
+      "registryDependencies": [
+        `${baseUrl}/r/chat-bubble.json`, 
+        `${baseUrl}/r/md-renderer.json`
+      ],
+      "files": [
+        {
+          "path": "src/registry/agents-kit/chat-messages.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "chat-form",
+      "type": "registry:component",
+      "title": "Chat Form",
+      "description": "A chat form component.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "card", 
+        "dropdown-menu", 
+        `${baseUrl}/r/autosize-textarea.json`, 
+        `${baseUrl}/r/chat-actions.json`
+      ],
+      "files": [
+        {
+          "path": "src/registry/agents-kit/chat-form.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
   ]
 };
 

@@ -1,0 +1,24 @@
+"use client";
+
+import { ChatForm } from "@/registry/agents-kit/chat-form";
+import { ChatMessages } from "@/registry/agents-kit/chat-messages";
+import { MessageArea } from "@/registry/agents-kit/message-area";
+import { useChat } from "@ai-sdk/react";
+
+export const MessageAreaDemo = () => {
+  const { messages, status, input, handleInputChange, handleSubmit } = useChat(
+    {}
+  );
+  return (
+    <div className="grid grid-cols-1 gap-4 py-4 prose max-w-none prose-sm prose-p:my-0">
+      <MessageArea messages={messages} status={status} className="h-60 pt-4">
+        <ChatMessages messages={messages} />
+      </MessageArea>
+      <ChatForm
+        inputValue={input}
+        onInputChange={handleInputChange}
+        onSubmit={handleSubmit}
+      />
+    </div>
+  );
+};
