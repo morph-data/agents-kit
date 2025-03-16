@@ -2,7 +2,7 @@
 
 import React, { forwardRef, RefObject, useEffect, useState } from "react";
 import { useImperativeHandle } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/registry/agents-kit/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 type UseAutosizeTextAreaProps = {

@@ -1,8 +1,8 @@
 // agents-kit v0.0.2
 
 import React, { FC } from "react";
-import { ChatBubble } from "./chat-bubble";
-import { MdRenderer } from "./md-renderer";
+import { ChatBubble } from "@/registry/agents-kit/chat-bubble";
+import { MdRenderer } from "@/registry/agents-kit/md-renderer";
 
 // Copied from Verce AI SDK Message interface
 interface Message {

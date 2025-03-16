@@ -6,9 +6,9 @@ import React, {
   HTMLAttributes,
   PropsWithChildren,
 } from "react";
-import { cn } from "@/lib/utils";
-import { Button, ButtonProps } from "@/components/ui/button";
-import { Toggle } from "@/components/ui/toggle";
+import { cn } from "@/registry/agents-kit/lib/utils";
+import { Button, ButtonProps } from "@/registry/agents-kit/ui/button";
+import { Toggle } from "@/registry/agents-kit/ui/toggle";
 
 const ChatActionIconButton = ({ ...props }: ButtonProps) => {
   return (

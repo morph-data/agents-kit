@@ -3,7 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { ChatForm } from "@/registry/agents-kit/chat-form";
 import { ChatMessages } from "@/registry/agents-kit/chat-messages";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { MessageArea } from "@/registry/agents-kit/message-area";
 
 export function ChatDemo() {
   const { messages, input, handleInputChange, handleSubmit, status } =
@@ -13,6 +13,7 @@ export function ChatDemo() {
     <div
       className={`
       flex flex-col items-stretch justify-center 
+      h-48
       prose max-w-none prose-sm prose-p:my-0
     `}
     >
@@ -22,9 +23,9 @@ export function ChatDemo() {
         </div>
       )}
       {messages.length > 0 && (
-        <ScrollArea style={{ flex: 1 }}>
+        <MessageArea style={{ flex: 1 }} messages={messages} status={status}>
           <ChatMessages messages={messages} status={status} />
-        </ScrollArea>
+        </MessageArea>
       )}
       <ChatForm
         inputValue={input}

@@ -36,6 +36,9 @@ export const DocsSidebar = () => {
             <DocsSidebarItem href="/docs/components/md-renderer">
               Markdown Renderer
             </DocsSidebarItem>
+            <DocsSidebarItem href="/docs/components/message-area">
+              Message Area
+            </DocsSidebarItem>
           </DocsSidebarGroup>
           <DocsSidebarGroup>
             <DocsSidebarGroupHeading>Blocks</DocsSidebarGroupHeading>
